@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Leafify</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(-45deg, #d1fae5, #a7f3d0, #6ee7b7, #34d399); background-size: 400% 400%; animation: gradientBG 15s ease infinite; }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl shadow-2xl p-8">
+        <div class="text-center mb-8">
+            <a href="/" class="flex items-center justify-center gap-3 mb-2">
+                <img src="/static/images/logo.png" alt="Leafify Logo" class="h-8 w-auto">
+                <h1 class="text-3xl font-bold text-emerald-800">Leafify</h1>
+            </a>
+            <p class="text-emerald-700">Welcome back! Sign in to continue.</p>
+        </div>
+        <form id="signin-form" class="space-y-6">
+            <div>
+                <label for="email" class="block text-sm font-medium text-emerald-800">Email address</label>
+                <input id="email" name="email" type="email" autocomplete="email" required class="mt-1 block w-full px-3 py-2 bg-white/50 border border-white/30 rounded-md shadow-sm placeholder-emerald-600/70 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-emerald-800">Password</label>
+                <input id="password" name="password" type="password" autocomplete="current-password" required class="mt-1 block w-full px-3 py-2 bg-white/50 border border-white/30 rounded-md shadow-sm placeholder-emerald-600/70 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
+            </div>
+            <p id="error-message" class="text-sm text-red-600 text-center"></p>
+            <div>
+                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-lg text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-300">
+                    Sign In
+                </button>
+            </div>
+        </form>
+        <p class="mt-6 text-center text-sm text-emerald-700">
+            Don't have an account? <a href="/signup" class="font-semibold text-emerald-800 hover:text-emerald-600">Sign up</a>
+        </p>
+    </div>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    const firebaseConfig = { apiKey: "AIzaSyAvacDGiWm1vTF5uBBzfZGO_u_H3JcmQvk", authDomain: "leafify-72dda.firebaseapp.com", projectId: "leafify-72dda", storageBucket: "leafify-72dda.firebasestorage.app", messagingSenderId: "1:713980236597:web:c94a3324b116c68c80327c", appId: "G-HK389N2CGL" };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const signinForm = document.getElementById('signin-form');
+    const errorMessage = document.getElementById('error-message');
+    signinForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        errorMessage.textContent = '';
+        signInWithEmailAndPassword(auth, signinForm.email.value, signinForm.password.value)
+            .then(userCredential => userCredential.user.getIdToken())
+            .then(idToken => fetch('/session-login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken: idToken }),
+            }))
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to create server session.');
+                window.location.href = '/dashboard';
+            })
+            .catch(error => {
+                console.error('Sign in process error:', error);
+                errorMessage.textContent = 'Invalid email or password.';
+            });
+    });
+</script>
+</body>
+</html>
