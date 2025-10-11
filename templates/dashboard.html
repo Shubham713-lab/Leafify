@@ -8,9 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <script>
@@ -26,93 +24,36 @@
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
-
         .gradient-bg {
             background: linear-gradient(-45deg, #01e150, #01e150, #00d478, #00ff88);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
         }
-
         .dark .gradient-bg {
             background: linear-gradient(-45deg, #0c4a6e, #064e3b, #115e59, #134e4a);
         }
-
         @keyframes gradientBG {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-        }
-
-        .dark ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        #theme-switcher svg {
-            transition: transform 0.3s ease-in-out, opacity 0.2s;
-        }
-
-        .dark #sun-icon {
-            transform: rotate(45deg) scale(0);
-            opacity: 0;
-        }
-
-        .dark #moon-icon {
-            transform: rotate(0) scale(1);
-            opacity: 1;
-        }
-
-        #sun-icon {
-            transform: rotate(0) scale(1);
-            opacity: 1;
-        }
-
-        #moon-icon {
-            position: absolute;
-            transform: rotate(-45deg) scale(0);
-            opacity: 0;
-        }
-
-        .user-message {
-            align-self: flex-end;
-            background-color: #10b981;
-            color: white;
-        }
-
-        .bot-message {
-            align-self: flex-start;
-            background-color: #e5e7eb;
-            color: #1f2937;
-        }
-
-        .dark .bot-message {
-            background-color: #374151;
-            color: #d1d5db;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); }
+        .hidden { display: none !important; }
+        #theme-switcher svg { transition: transform 0.3s ease-in-out, opacity 0.2s; }
+        .dark #sun-icon { transform: rotate(45deg) scale(0); opacity: 0; }
+        .dark #moon-icon { transform: rotate(0) scale(1); opacity: 1; }
+        #sun-icon { transform: rotate(0) scale(1); opacity: 1; }
+        #moon-icon { position: absolute; transform: rotate(-45deg) scale(0); opacity: 0; }
+        .user-message { align-self: flex-end; background-color: #10b981; color: white; }
+        .bot-message { align-self: flex-start; background-color: #e5e7eb; color: #1f2937; }
+        .dark .bot-message { background-color: #374151; color: #d1d5db; }
+        /* Styling for generated markdown content */
+        #remedies-content h3, #tab-1 h3, #tab-2 h3, #tab-3 h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #065f46; }
+        .dark #remedies-content h3, .dark #tab-1 h3, .dark #tab-2 h3, .dark #tab-3 h3 { color: #6ee7b7; }
+        #remedies-content ul, #tab-1 ul, #tab-2 ul, #tab-3 ul { list-style-position: inside; margin-left: 0.5rem; }
     </style>
 </head>
 
@@ -127,84 +68,50 @@
                 <span class="text-xl font-semibold text-emerald-800 dark:text-emerald-300">Leafify</span>
             </a>
             <div class="flex items-center gap-2 md:gap-4">
-                <span class="text-sm text-emerald-900 dark:text-emerald-300 font-medium hidden md:block">{{ user_email
-                    }}</span>
-                <button id="theme-switcher"
-                    class="relative flex items-center justify-center bg-green-100/40 dark:bg-white/10 w-10 h-10 rounded-full hover:bg-green-200/40 dark:hover:bg-white/20 transition-colors"
-                    title="Switch theme">
-                    <svg id="sun-icon" class="w-6 h-6 text-emerald-800 dark:text-emerald-300"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor">
-                        <path
-                            d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.95-4.243l-1.59-1.591M3.75 12H3m4.243-4.95l-1.59-1.591M12 6.75A5.25 5.25 0 0117.25 12 5.25 5.25 0 0112 17.25 5.25 5.25 0 016.75 12 5.25 5.25 0 0112 6.75z" />
-                    </svg>
-                    <svg id="moon-icon" class="w-6 h-6 text-emerald-800 dark:text-emerald-300"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor">
-                        <path
-                            d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
-                    </svg>
+                <span class="text-sm text-emerald-900 dark:text-emerald-300 font-medium hidden md:block">{{ user_email }}</span>
+                <button id="theme-switcher" class="relative flex items-center justify-center bg-green-100/40 dark:bg-white/10 w-10 h-10 rounded-full hover:bg-green-200/40 dark:hover:bg-white/20 transition-colors" title="Switch theme">
+                    <svg id="sun-icon" class="w-6 h-6 text-emerald-800 dark:text-emerald-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.95-4.243l-1.59-1.591M3.75 12H3m4.243-4.95l-1.59-1.591M12 6.75A5.25 5.25 0 0117.25 12 5.25 5.25 0 0112 17.25 5.25 5.25 0 016.75 12 5.25 5.25 0 0112 6.75z" /></svg>
+                    <svg id="moon-icon" class="w-6 h-6 text-emerald-800 dark:text-emerald-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
                 </button>
-                <button id="history-btn"
-                    class="bg-green-100/40 dark:bg-white/10 p-2 rounded-full hover:bg-green-200/40 dark:hover:bg-white/20 transition-colors"
-                    title="View history">
-                    <svg class="w-6 h-6 text-emerald-800 dark:text-emerald-300" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                <button id="history-btn" class="bg-green-100/40 dark:bg-white/10 p-2 rounded-full hover:bg-green-200/40 dark:hover:bg-white/20 transition-colors" title="View history">
+                    <svg class="w-6 h-6 text-emerald-800 dark:text-emerald-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </button>
-                <a href="/signout"
-                    class="text-emerald-900 dark:text-emerald-200 font-medium px-4 py-2 rounded-full hover:bg-green-200/30 dark:hover:bg-white/10 transition-colors">Sign
-                    Out</a>
+                <a href="/signout" class="text-emerald-900 dark:text-emerald-200 font-medium px-4 py-2 rounded-full hover:bg-green-200/30 dark:hover:bg-white/10 transition-colors">Sign Out</a>
             </div>
         </nav>
 
-        <main
-            class="w-full max-w-7xl flex-1 bg-green-50/20 dark:bg-gray-900/50 backdrop-blur-xl border border-green-200/30 dark:border-white/20 rounded-2xl shadow-2xl p-6 md:p-8 mt-20 flex flex-col transition-colors duration-500">
+        <main class="w-full max-w-7xl flex-1 bg-green-50/20 dark:bg-gray-900/50 backdrop-blur-xl border border-green-200/30 dark:border-white/20 rounded-2xl shadow-2xl p-6 md:p-8 mt-20 flex flex-col transition-colors duration-500">
             <div class="text-center pb-6 border-b border-emerald-900/10 dark:border-white/20">
-                <h1 class="text-3xl md:text-4xl font-bold text-emerald-900 dark:text-gray-100">AI Medicinal Plant
-                    Identifier</h1>
+                <h1 class="text-3xl md:text-4xl font-bold text-emerald-900 dark:text-gray-100">AI Medicinal Plant Identifier</h1>
                 <p class="text-emerald-700 dark:text-gray-400 mt-2">Upload a photo to discover a plant's secrets.</p>
             </div>
 
+
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6 flex-1">
+                <!-- Column 1: Image Upload -->
                 <div class="flex flex-col gap-4">
-                    <div id="image-preview"
-                        class="w-full h-80 md:h-auto md:flex-1 bg-emerald-100/50 dark:bg-black/20 border-2 border-dashed border-emerald-500/30 dark:border-gray-400/30 rounded-xl flex items-center justify-center transition-colors duration-500">
-                        <span class="text-emerald-700 dark:text-gray-400 opacity-70">Image preview will appear
-                            here</span>
+                    <div id="image-preview" class="w-full h-80 md:h-auto md:flex-1 bg-emerald-100/50 dark:bg-black/20 border-2 border-dashed border-emerald-500/30 dark:border-gray-400/30 rounded-xl flex items-center justify-center transition-colors duration-500">
+                        <span class="text-emerald-700 dark:text-gray-400 opacity-70">Image preview will appear here</span>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <label for="image-upload"
-                            class="col-span-2 md:col-span-1 text-center bg-green-100/50 dark:bg-white/10 text-emerald-800 dark:text-gray-200 font-semibold py-3 px-4 rounded-lg cursor-pointer hover:bg-green-200/50 dark:hover:bg-white/20 transition-all duration-300 flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="2">
-                                <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                            </svg>
+                        <label for="image-upload" class="col-span-2 md:col-span-1 text-center bg-green-100/50 dark:bg-white/10 text-emerald-800 dark:text-gray-200 font-semibold py-3 px-4 rounded-lg cursor-pointer hover:bg-green-200/50 dark:hover:bg-white/20 transition-all duration-300 flex items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
                             Choose Image
                         </label>
                         <input type="file" id="image-upload" accept="image/*" class="hidden">
-                        <button id="identify-btn"
-                            class="col-span-2 md:col-span-1 bg-emerald-500 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-emerald-600 hover:shadow-emerald-500/50 hover:scale-105 transition-all duration-300">
+                        <button id="identify-btn" class="col-span-2 md:col-span-1 bg-emerald-500 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-emerald-600 hover:shadow-emerald-500/50 hover:scale-105 transition-all duration-300">
                             Identify
                         </button>
                     </div>
                 </div>
 
-                <div id="result-container"
-                    class="bg-emerald-100/50 dark:bg-black/20 p-4 rounded-xl flex flex-col transition-colors duration-500">
-                    <div id="placeholder-text"
-                        class="flex flex-col items-center justify-center h-full text-center text-emerald-700 dark:text-gray-400 opacity-70">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="1">
-                            <path
-                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                        </svg>
+                <!-- Column 2: Identification Results -->
+                <div id="result-container" class="bg-emerald-100/50 dark:bg-black/20 p-4 rounded-xl flex flex-col transition-colors duration-500">
+                    <div id="placeholder-text" class="flex flex-col items-center justify-center h-full text-center text-emerald-700 dark:text-gray-400 opacity-70">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
                         <p>Identification results will show up here.</p>
                     </div>
-                    <div id="loader" class="hidden flex items-center justify-center h-full">
-                        <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-500"></div>
-                    </div>
+                    <div id="loader" class="hidden flex items-center justify-center h-full"><div class="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-500"></div></div>
                     <div id="results-content" class="hidden opacity-0 transition-opacity duration-500 h-[450px] flex flex-col">
                         <div id="suggestions-list" class="mb-4 space-y-3"></div>
                         <div class="tabs-container flex-1 flex flex-col min-h-0">
@@ -222,49 +129,44 @@
                     </div>
                 </div>
 
-                <div id="chatbot-container"
-                    class="hidden bg-emerald-100/50 dark:bg-black/20 p-4 rounded-xl flex-col transition-all duration-500 lg:col-span-1">
+                <!-- Column 3: Chatbot -->
+                <div id="chatbot-container" class="hidden bg-emerald-100/50 dark:bg-black/20 p-4 rounded-xl flex-col transition-all duration-500 lg:col-span-1">
                     <div class="border-b border-emerald-900/10 dark:border-white/20 pb-2 mb-4">
-                        <h3 class="font-bold text-emerald-900 dark:text-gray-100">Ask about <span
-                                id="chatbot-plant-name" class="text-emerald-600 dark:text-emerald-400">Plant</span></h3>
+                        <h3 class="font-bold text-emerald-900 dark:text-gray-100">Ask about <span id="chatbot-plant-name" class="text-emerald-600 dark:text-emerald-400">Plant</span></h3>
                     </div>
-                    <div id="chat-messages" class="flex-1 space-y-4 p-2 flex flex-col overflow-y-auto">
-                    </div>
+                    <div id="chat-messages" class="flex-1 space-y-4 p-2 flex flex-col overflow-y-auto"></div>
                     <form id="chat-form" class="mt-4 flex items-center gap-2">
-                        <input id="chat-input" type="text" placeholder="Type your question..."
-                            class="w-full p-2 rounded-lg bg-emerald-200/50 dark:bg-gray-700/50 border border-emerald-500/30 dark:border-gray-500/30 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-emerald-900 dark:text-gray-200">
-                        <button type="submit" id="chat-send-btn"
-                            class="bg-emerald-500 text-white p-2 rounded-full hover:bg-emerald-600 transition-colors shrink-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path
-                                    d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-                            </svg>
+                        <input id="chat-input" type="text" placeholder="Type your question..." class="w-full p-2 rounded-lg bg-emerald-200/50 dark:bg-gray-700/50 border border-emerald-500/30 dark:border-gray-500/30 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-emerald-900 dark:text-gray-200">
+                        <button type="submit" id="chat-send-btn" class="bg-emerald-500 text-white p-2 rounded-full hover:bg-emerald-600 transition-colors shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" /></svg>
                         </button>
                     </form>
                 </div>
-            </div>
+
+                
+                </div>
+                <!-- NEW: Home Remedy Suggestions Section -->
+                <section id="remedies-section" class="hidden mt-6 p-6 bg-emerald-100/50 dark:bg-black/20 rounded-2xl">
+                    <h2 class="text-2xl font-bold text-emerald-900 dark:text-gray-100 text-center mb-4">Home Remedy Suggestions</h2>
+                    <div id="remedies-content" class="text-emerald-800 dark:text-gray-300 text-sm leading-relaxed space-y-4">
+                        <!-- Dynamic content will be injected here -->
+                    </div>
+                </section>
         </main>
 
         <footer class="w-full max-w-7xl text-center py-4 mt-4 border-t border-emerald-900/10 dark:border-white/20">
-            <div
-                class="flex flex-col sm:flex-row items-center justify-between text-sm text-emerald-700 dark:text-gray-400">
+            <div class="flex flex-col sm:flex-row items-center justify-between text-sm text-emerald-700 dark:text-gray-400">
                 <span>&copy; 2025 Leafify. All rights reserved.</span>
-                <span class="mt-2 sm:mt-0">Made with ❤️ by <strong
-                        class="font-semibold text-emerald-800 dark:text-emerald-300">Nova Nexus</strong></span>
+                <span class="mt-2 sm:mt-0">Made with ❤️ by <strong class="font-semibold text-emerald-800 dark:text-emerald-300">Nova Nexus</strong></span>
             </div>
         </footer>
     </div>
 
-    <div id="history-modal"
-        class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div
-            class="bg-green-50/70 dark:bg-gray-900/70 border border-green-200/30 dark:border-white/20 backdrop-blur-lg rounded-2xl w-full max-w-md p-6 shadow-2xl transition-colors duration-500">
-            <div
-                class="flex justify-between items-center mb-4 pb-2 border-b border-emerald-900/10 dark:border-white/20">
+    <div id="history-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-green-50/70 dark:bg-gray-900/70 border border-green-200/30 dark:border-white/20 backdrop-blur-lg rounded-2xl w-full max-w-md p-6 shadow-2xl transition-colors duration-500">
+            <div class="flex justify-between items-center mb-4 pb-2 border-b border-emerald-900/10 dark:border-white/20">
                 <h2 class="text-xl font-bold text-emerald-900 dark:text-gray-100">Identification History</h2>
-                <button id="close-modal-btn"
-                    class="text-2xl font-light text-emerald-700 dark:text-gray-300 hover:text-emerald-900 dark:hover:text-gray-100">&times;</button>
+                <button id="close-modal-btn" class="text-2xl font-light text-emerald-700 dark:text-gray-300 hover:text-emerald-900 dark:hover:text-gray-100">&times;</button>
             </div>
             <div id="history-list" class="space-y-3 max-h-80 overflow-y-auto"></div>
         </div>
@@ -290,6 +192,8 @@
         const chatMessages = document.getElementById('chat-messages');
         const chatForm = document.getElementById('chat-form');
         const chatInput = document.getElementById('chat-input');
+        const remediesSection = document.getElementById('remedies-section');
+        const remediesContentContainer = document.getElementById('remedies-content');
 
         let selectedFile = null, currentImageBase64 = null, currentPlantName = '';
 
@@ -316,8 +220,6 @@
         historyModal.addEventListener('click', (e) => { if (e.target === historyModal) historyModal.classList.add('hidden'); });
         chatForm.addEventListener('submit', handleChatSubmit);
 
-
-        // --- CORE IDENTIFICATION FUNCTIONS ---
         function handleImageUpload(event) {
             selectedFile = event.target.files[0];
             if (selectedFile) {
@@ -344,9 +246,9 @@
             } catch (error) { displayError(error.message); } finally { showLoadingState(false); }
         }
 
-        // THIS FUNCTION IS NOW CORRECT
         function showLoadingState(isLoading) {
             if (isLoading) {
+                remediesSection.classList.add('hidden'); // Hide remedies on new load
                 chatbotContainer.classList.add('hidden');
                 placeholderText.classList.add('hidden');
                 resultsContent.classList.add('hidden');
@@ -358,6 +260,7 @@
         }
 
         function displayError(message) {
+            remediesSection.classList.add('hidden'); // Hide remedies on error
             resultsContent.classList.add('hidden');
             placeholderText.classList.remove('hidden');
             chatbotContainer.classList.add('hidden');
@@ -365,6 +268,12 @@
         }
 
         function displayResults(data) {
+            // Display Remedy Suggestions
+            const remediesContent = data.description.home_remedies || "No home remedy suggestions available.";
+            remediesContentContainer.innerHTML = marked.parse(remediesContent);
+            remediesSection.classList.remove('hidden');
+
+            // Display Identification Results
             placeholderText.classList.add('hidden');
             resultsContent.classList.remove('hidden');
             setTimeout(() => resultsContent.classList.add('opacity-100'), 10);
@@ -373,34 +282,33 @@
                 const confidence = (suggestion.probability * 100).toFixed(0);
                 const item = document.createElement('div');
                 item.innerHTML = `
-            <div class="flex justify-between items-center mb-1 text-emerald-900 dark:text-gray-200">
-                <span class="font-semibold text-sm">${suggestion.plant_name}</span>
-                <span class="text-xs font-mono">${confidence}%</span>
-            </div>
-            <div class="w-full bg-emerald-900/10 dark:bg-white/10 rounded-full h-1.5">
-                <div class="bg-emerald-500 h-1.5 rounded-full" style="width: ${confidence}%; transition: width 0.5s ease-in-out;"></div>
-            </div>`;
+                <div class="flex justify-between items-center mb-1 text-emerald-900 dark:text-gray-200">
+                    <span class="font-semibold text-sm">${suggestion.plant_name}</span>
+                    <span class="text-xs font-mono">${confidence}%</span>
+                </div>
+                <div class="w-full bg-emerald-900/10 dark:bg-white/10 rounded-full h-1.5">
+                    <div class="bg-emerald-500 h-1.5 rounded-full" style="width: ${confidence}%; transition: width 0.5s ease-in-out;"></div>
+                </div>`;
                 suggestionsList.appendChild(item);
             });
 
-            // THIS IS THE CHANGED PART
+            // Display Tab Content
             const usesContent = data.description.medicinal_uses || "No information available.";
             const growContent = data.description.how_to_grow || "No information available.";
             const warningsContent = data.description.warnings || "No specific warnings available.";
-
-            // Use marked.parse() to convert markdown to HTML
             document.getElementById('tab-1').innerHTML = marked.parse(usesContent);
             document.getElementById('tab-2').innerHTML = marked.parse(growContent);
             document.getElementById('tab-3').innerHTML = marked.parse(warningsContent);
-
             handleTabClick({ target: document.querySelector('.tab-link[data-tab="tab-1"]') });
 
+            // Activate Chatbot
             currentPlantName = data.suggestions[0].plant_name;
             chatbotPlantName.textContent = currentPlantName;
             chatMessages.innerHTML = '';
             appendMessage(`Hi! I can now answer questions about ${currentPlantName}. What would you like to know?`, 'bot');
             chatbotContainer.classList.remove('hidden');
         }
+
         function handleTabClick(event) {
             if (!event.target || !event.target.classList.contains('tab-link')) return;
             tabsContainer.querySelectorAll('.tab-link').forEach(tab => tab.classList.remove('active'));
@@ -415,11 +323,9 @@
             event.preventDefault();
             const question = chatInput.value.trim();
             if (!question || !currentPlantName) return;
-
             appendMessage(question, 'user');
             chatInput.value = '';
             showTypingIndicator(true);
-
             try {
                 const response = await fetch('/chat', {
                     method: 'POST',
@@ -435,15 +341,13 @@
                 showTypingIndicator(false);
             }
         }
-
         function appendMessage(text, sender) {
             const messageDiv = document.createElement('div');
-            messageDiv.textContent = text;
+            messageDiv.innerHTML = marked.parse(text); // Use marked for chatbot too
             messageDiv.className = `max-w-[80%] rounded-xl px-4 py-2 text-sm ${sender}-message`;
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
-
         function showTypingIndicator(isTyping) {
             let indicator = document.getElementById('typing-indicator');
             if (isTyping) {

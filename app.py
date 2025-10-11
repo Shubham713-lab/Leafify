@@ -119,18 +119,39 @@ def get_suggestions_from_plant_id(image_file):
 
 def get_description_from_gemini(plant_name):
     model = genai.GenerativeModel('gemini-2.5-flash')
-    # UPDATED PROMPT
+    # UPDATED PROMPT TO INCLUDE HOME REMEDIES
     prompt = f'''
-    For the plant "{plant_name}", provide a JSON object with three keys: "medicinal_uses", "how_to_grow", and "warnings".
-    For the value of each key, please provide the text in clean, well-formatted Markdown.
-    Use headings for categories (like Internal Use, Topical Use) and bullet points for individual items.
+    For the plant "{plant_name}", provide a JSON object with four keys: "medicinal_uses", "how_to_grow", "warnings", and "home_remedies".
+    For the value of "home_remedies", provide 2-3 simple home remedy recipes formatted in clean Markdown. Each remedy should include the illness it targets and a short recipe.
+    For the other keys, also use well-formatted Markdown with headings and bullet points.
     '''
     response = model.generate_content(prompt)
     cleaned_response = response.text.strip().replace('```json', '').replace('```', '')
     try:
         return json.loads(cleaned_response)
+    # ADDED 'home_remedies' TO THE ERROR FALLBACK
     except json.JSONDecodeError:
-        return {"medicinal_uses": "Info not available.", "how_to_grow": "Info not available.", "warnings": "Info not available."}
+        return {
+            "medicinal_uses": "Info not available.",
+            "how_to_grow": "Info not available.",
+            "warnings": "Info not available.",
+            "home_remedies": "No home remedy suggestions available at this time."
+        }
+
+# def get_description_from_gemini(plant_name):
+#     model = genai.GenerativeModel('gemini-2.5-flash')
+#     # UPDATED PROMPT
+#     prompt = f'''
+#     For the plant "{plant_name}", provide a JSON object with three keys: "medicinal_uses", "how_to_grow", and "warnings".
+#     For the value of each key, please provide the text in clean, well-formatted Markdown.
+#     Use headings for categories (like Internal Use, Topical Use) and bullet points for individual items.
+#     '''
+#     response = model.generate_content(prompt)
+#     cleaned_response = response.text.strip().replace('```json', '').replace('```', '')
+#     try:
+#         return json.loads(cleaned_response)
+#     except json.JSONDecodeError:
+#         return {"medicinal_uses": "Info not available.", "how_to_grow": "Info not available.", "warnings": "Info not available."}
 
 if __name__ == '__main__':
     app.run(debug=True)
