@@ -10,7 +10,12 @@ import base64
 
 # --- Initialization ---
 load_dotenv()
-app = Flask(__name__)
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+app = Flask(
+    __name__,
+    template_folder=os.path.join(project_root, 'templates'),
+    static_folder=os.path.join(project_root, 'static')
+)
 app.secret_key = os.urandom(24) 
 
 # --- Initialize Firebase Admin SDK (Vercel-friendly) ---
