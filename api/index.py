@@ -6,17 +6,31 @@ from firebase_admin import credentials, auth
 import requests
 import google.generativeai as genai
 import json
+import base64
 
 # --- Initialization ---
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.urandom(24) 
 
-# --- Initialize Firebase Admin SDK ---
+# --- Initialize Firebase Admin SDK (Vercel-friendly) ---
 try:
-    # Make sure 'serviceAccountKey.json' is in the same directory as your app.py
-    cred = credentials.Certificate('serviceAccountKey.json')
-    firebase_admin.initialize_app(cred)
+    # Get the Base64 encoded service account from environment variables
+    firebase_creds_b64 = os.getenv('FIREBASE_SERVICE_ACCOUNT_KEY_B64')
+    if firebase_creds_b64:
+        # Decode the Base64 string
+        firebase_creds_json = base64.b64decode(firebase_creds_b64).decode('utf-8')
+        firebase_creds = json.loads(firebase_creds_json)
+        
+        cred = credentials.Certificate(firebase_creds)
+        firebase_admin.initialize_app(cred)
+        print("Firebase Admin SDK initialized from environment variable.")
+    else:
+        # Fallback for local development
+        cred = credentials.Certificate('serviceAccountKey.json')
+        firebase_admin.initialize_app(cred)
+        print("Firebase Admin SDK initialized from file (local).")
+
 except Exception as e:
     print(f"Error initializing Firebase Admin SDK: {e}")
 
