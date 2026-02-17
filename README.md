@@ -25,6 +25,7 @@ Leafify is a powerful tool designed for botanists, herbalists, and nature enthus
 
 📜 Identification History: Signed-in users can keep a log of their past discoveries for easy reference.
 
+
 ☀️ Dark & Light Mode: A sleek, modern interface with theme switching for comfortable viewing day or night.
 
 🔐 User Authentication: Secure sign-up and sign-in functionality using Firebase Authentication.
@@ -107,4 +108,4 @@ The application will be available at http://127.0.0.1:5000.
 Distributed under the MIT License. See LICENSE for more information.
 
 💚 Acknowledgements
-This project was made with ❤️ by nova nexus.
+This project was made with ❤️ by nova nexus guided by [https://github.com/Tushar-Singh07]
